@@ -12,6 +12,7 @@ import NewsSection from './sections/NewsSection';
 import ContactSection from './sections/ContactSection';
 import FooterSection from './sections/FooterSection';
 import ProgressDots from './components/ProgressDots';
+import ChatBot from './components/ChatBot';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -227,6 +228,9 @@ function App() {
           onDotClick={navigateToSection}
         />
       )}
+
+      {/* Chat Bot */}
+      <ChatBot />
     </div>
   );
 }

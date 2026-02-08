@@ -163,13 +163,13 @@ const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
           <div className="mt-16 pt-8 border-t border-white/20 flex flex-col lg:flex-row gap-8 lg:items-center justify-between text-white/70 text-sm">
             <div className="flex flex-col gap-2">
               <strong className="text-white block mb-1">Contact Admissions</strong>
-              <a href="tel:678-540-7229" className="hover:text-white transition-colors">(678) 540-7229</a>
-              <a href="mailto:admission@thewalkerschool.org" className="hover:text-white transition-colors">admission@thewalkerschool.org</a>
+              <a href="tel:+96824284756" className="hover:text-white transition-colors">+968 24 284 756</a>
+              <a href="mailto:admission@alshomoukh.com" className="hover:text-white transition-colors">admission@alshomoukh.com</a>
             </div>
             <div className="flex flex-col gap-2 lg:text-right">
               <strong className="text-white block mb-1">Visit Us</strong>
-              <span>700 Cobb Parkway North</span>
-              <span>Marietta, GA 30062</span>
+              <span>Hay Al Hail South</span>
+              <span>Muscat, Sultanate of Oman</span>
             </div>
           </div>
         </div>
