@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
-  currentSection: number;
-  onNavigate: (index: number) => void;
-  isMobile: boolean;
+  isMobile?: boolean; // Optional now, or we can handle it inside
 }
 
-const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
+const Header = ({ isMobile = false }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -21,33 +19,38 @@ const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
   }, []);
 
   const topNavItems = [
-    { label: 'Admissions', sectionIndex: 4 },
-    { label: 'Academics', sectionIndex: 2 },
-    { label: 'Contact', sectionIndex: 7 },
+    { label: 'Admissions', href: '#admissions' },
+    { label: 'Academics', href: '#academics' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   const fullMenu = [
-    { label: 'Home', sectionIndex: 0 },
-    { label: 'About', sectionIndex: 1 },
-    { label: 'Academics', sectionIndex: 2 },
-    { label: 'Student Life', sectionIndex: 3 },
-    { label: 'Admissions', sectionIndex: 4 },
-    { label: 'Campus', sectionIndex: 5 },
-    { label: 'News & Events', sectionIndex: 6 },
-    { label: 'Contact', sectionIndex: 7 },
+    { label: 'Home', href: '#hero' },
+    { label: 'About', href: '#about' },
+    { label: 'Academics', href: '#academics' },
+    { label: 'Student Life', href: '#student-life' },
+    { label: 'Admissions', href: '#admissions' },
+    { label: 'Campus', href: '#campus' },
+    { label: 'News & Events', href: '#news' },
+    { label: 'Contact', href: '#contact' },
   ];
 
-  const handleNavClick = (sectionIndex: number) => {
-    onNavigate(sectionIndex);
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     setIsMenuOpen(false);
+
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent ${isScrolled || currentSection > 0 || isMenuOpen
-          ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-white/5 py-2'
-          : 'bg-transparent py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMenuOpen
+          ? 'glass-dark py-3 border-b border-white/5'
+          : 'bg-transparent py-6 lg:py-8'
           }`}
       >
         <div className="relative w-full px-8 lg:px-16">
@@ -55,13 +58,10 @@ const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
             {/* Logo */}
             <a
               href="#hero"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick(0);
-              }}
+              onClick={(e) => handleNavClick(e, '#hero')}
               className="flex items-center gap-4 group z-50"
             >
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${isMenuOpen || isScrolled || currentSection > 0 ? 'bg-[#7A1F2E] scale-90' : 'bg-[#7A1F2E] scale-100'
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${isMenuOpen || isScrolled ? 'bg-[#7A1F2E] scale-90' : 'bg-[#7A1F2E] scale-100'
                 }`}>
                 <svg
                   viewBox="0 0 24 24"
@@ -89,11 +89,8 @@ const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
                 {!isMenuOpen && topNavItems.map((item) => (
                   <a
                     key={item.label}
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.sectionIndex);
-                    }}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className="walker-nav-link text-[11px] font-bold uppercase tracking-[0.15em] text-white/90 hover:text-[#D4A84B] transition-colors drop-shadow-sm relative group"
                   >
                     {item.label}
@@ -142,11 +139,8 @@ const Header = ({ currentSection, onNavigate, isMobile }: HeaderProps) => {
                 className="overflow-hidden"
               >
                 <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.sectionIndex);
-                  }}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="block group py-2"
                 >
                   <div className="flex items-baseline gap-4 transform transition-transform duration-500 group-hover:translate-x-4">

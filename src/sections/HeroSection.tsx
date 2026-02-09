@@ -1,100 +1,150 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-interface HeroSectionProps {
-  isActive?: boolean;
-}
+gsap.registerPlugin(ScrollTrigger);
 
-const HeroSection = ({ isActive = false }: HeroSectionProps) => {
+const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Entrace animations
       gsap.set(textRef.current, { opacity: 0, y: 60 });
       gsap.set(ctaRef.current, { opacity: 0, y: 40 });
 
-      if (isActive) {
-        const tl = gsap.timeline({ delay: 0.5 });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 60%", // Start animation when top of section is at 60% of viewport
+          toggleActions: "play none none reverse"
+        }
+      });
 
-        tl.to(textRef.current, {
+      tl.to(textRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      })
+        .to(ctaRef.current, {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1,
           ease: 'power3.out'
-        })
-          .to(ctaRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out'
-          }, '-=0.8');
-      }
+        }, '-=0.8');
+
+      // Parallax Background
+      gsap.to(bgRef.current, {
+        yPercent: 30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
     }, containerRef);
 
-    return () => ctx.revert();
-  }, [isActive]);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!bgRef.current) return;
+      const { clientX, clientY } = e;
+      const xPos = (clientX / window.innerWidth - 0.5) * 10;
+      const yPos = (clientY / window.innerHeight - 0.5) * 10;
+
+      gsap.to(bgRef.current, {
+        x: xPos,
+        y: yPos,
+        duration: 1,
+        ease: "power2.out",
+        overwrite: "auto" // Prevent conflicts
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-black">
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black flex items-center perspective-1000">
       {/* Background Video/Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 scale-105"
+        ref={bgRef}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 scale-110 will-change-transform backface-hidden"
         style={{
           backgroundImage: `url('/hero_bg.png')`,
         }}
       />
 
       {/* Enhanced Gradient Overlays for Readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent sm:via-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/60 opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent sm:via-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-black/60 opacity-90" />
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-20 max-w-7xl mx-auto pt-20">
-        <div ref={textRef} className="max-w-3xl">
-          <span className="walker-nav-link text-[#D4A84B] tracking-[0.2em] mb-4 block text-xs font-semibold uppercase shadow-black/50 drop-shadow-md">
-            EST. 2015 • Muscat, Oman
-          </span>
-          <h1 className="walker-heading text-white text-5xl lg:text-7xl leading-[1.05] mb-6 font-serif tracking-tight drop-shadow-lg">
+      <div className="relative z-10 w-full flex flex-col justify-center px-6 lg:px-20 max-w-[1800px] mx-auto pt-24 md:pt-20 h-full">
+        <div ref={textRef} className="max-w-4xl">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-[1px] w-12 bg-[#D4A84B]"></span>
+            <span className="walker-nav-link text-[#D4A84B] tracking-[0.2em] text-[10px] md:text-xs font-semibold uppercase shadow-black/50 drop-shadow-md">
+              EST. 2015 • Muscat, Oman
+            </span>
+          </div>
+
+          <h1 className="walker-heading text-white text-5xl md:text-6xl lg:text-8xl leading-[1.05] mb-8 font-serif tracking-tight drop-shadow-xl">
             AL SHOMOUKH <br />
-            <span className="text-white/90 italic font-light">International Private School.</span>
+            <span className="text-white/80 italic font-light">International School</span>
           </h1>
-          <p className="walker-body text-white/90 text-base lg:text-lg max-w-xl leading-relaxed mb-10 border-l-2 border-[#D4A84B] pl-6 drop-shadow-md">
-            Global Education with Omani Values. We provide a holistic education for students aged 3-18 through the UK National Curriculum, IGCSE, A-Levels, and Omani GED.
+
+          <p className="walker-body text-white/90 text-sm md:text-lg lg:text-xl max-w-2xl leading-relaxed mb-12 border-l-4 border-[#D4A84B] pl-6 drop-shadow-md font-light">
+            Providing a holistic education for students aged 3-18 through the <strong className="text-white font-medium">UK National Curriculum</strong>, <strong className="text-white font-medium">IGCSE</strong>, <strong className="text-white font-medium">A-Levels</strong>, and <strong className="text-white font-medium">Omani GED</strong>. Global vision with local values.
           </p>
 
-          <div ref={ctaRef} className="flex flex-wrap items-center gap-5">
-            <button className="px-8 py-4 bg-[#D4A84B] text-[#7A1F2E] text-xs font-bold tracking-widest uppercase hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl rounded-sm">
-              Admissions
+          <div ref={ctaRef} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-16">
+            <button className="w-full sm:w-auto px-10 py-5 bg-[#D4A84B] text-[#7A1F2E] text-xs font-bold tracking-[0.15em] uppercase hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl rounded-sm text-center">
+              Admissions Open
             </button>
-            <button className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-[#7A1F2E] transition-all duration-300 rounded-sm">
-              Curriculum
+            <button className="w-full sm:w-auto px-10 py-5 bg-white/5 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-[0.15em] uppercase hover:bg-white hover:text-[#7A1F2E] transition-all duration-300 rounded-sm text-center shadow-lg">
+              Book a Campus Tour
             </button>
-            <button className="group px-6 py-4 text-white hover:text-[#D4A84B] transition-colors text-xs font-bold tracking-widest uppercase flex items-center gap-2">
-              Book a Tour <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </button>
+          </div>
+
+          {/* Key Strengths / Highlights */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-white/10 pt-8 max-w-3xl">
+            <div>
+              <h4 className="text-[#D4A84B] text-2xl md:text-3xl font-serif mb-1">100%</h4>
+              <p className="text-white/60 text-[10px] uppercase tracking-widest">University Acceptance</p>
+            </div>
+            <div>
+              <h4 className="text-[#D4A84B] text-2xl md:text-3xl font-serif mb-1">35+</h4>
+              <p className="text-white/60 text-[10px] uppercase tracking-widest">Nationalities</p>
+            </div>
+            <div>
+              <h4 className="text-[#D4A84B] text-2xl md:text-3xl font-serif mb-1">1:12</h4>
+              <p className="text-white/60 text-[10px] uppercase tracking-widest">Teacher Ratio</p>
+            </div>
+            <div>
+              <h4 className="text-[#D4A84B] text-2xl md:text-3xl font-serif mb-1">CIS</h4>
+              <p className="text-white/60 text-[10px] uppercase tracking-widest">Accredited Member</p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Celebrating Students - Moved to bottom right or kept separate to reduce clutter */}
-      <div className="absolute bottom-12 left-8 lg:left-20 hidden lg:block max-w-lg z-10">
-        <div className="text-white/60 text-[10px] uppercase tracking-widest mb-1 font-semibold flex items-center gap-2">
-          <span className="w-8 h-[1px] bg-[#D4A84B]"></span> Featured Students
-        </div>
-        <p className="text-white/80 text-xs leading-relaxed font-light">
-          <span className="text-white font-medium">Mohammed Al Mahrooqi</span> (Gr 10B) •
-          <span className="text-white font-medium ml-2">Lina Al Ashqar</span> (Gr 12B)
-        </p>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-10 right-10 flex flex-col items-center gap-2 text-white/40 z-10">
-        <span className="text-[10px] uppercase tracking-[0.2em] -rotate-90 origin-center translate-y-8">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-white/20 to-white/60 mt-8"></div>
+      {/* Scroll Indicator - Bottom Right */}
+      <div className="absolute bottom-12 right-12 hidden lg:flex flex-col items-center gap-4 text-white/30 z-20">
+        <span className="text-[9px] uppercase tracking-[0.3em] font-medium -rotate-90 origin-center translate-y-8">Scroll</span>
+        <div className="w-[1px] h-16 bg-gradient-to-b from-white/10 to-white/50 mt-10"></div>
       </div>
     </div>
   );
