@@ -1,154 +1,240 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ContactSection = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const infoRef = useRef<HTMLDivElement>(null);
-    const formRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    inquiry: '',
+  });
 
-    useEffect(() => {
-        if (!containerRef.current) return;
+  useEffect(() => {
+    const section = sectionRef.current;
+    const contact = contactRef.current;
+    const form = formRef.current;
 
-        const ctx = gsap.context(() => {
-            gsap.set(infoRef.current, { opacity: 0, x: -50 });
-            gsap.set(formRef.current, { opacity: 0, x: 50 });
+    if (!section || !contact || !form) return;
 
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 75%",
-                    toggleActions: "play none none reverse"
-                }
-            });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        }
+      });
 
-            tl.to(infoRef.current, {
-                opacity: 1,
-                x: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            });
+      tl.fromTo(contact,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
+      )
+      .fromTo(form,
+        { x: 30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+        '-=0.3'
+      );
+    }, section);
 
-            tl.to(formRef.current, {
-                opacity: 1,
-                x: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            }, '-=0.6');
+    return () => ctx.revert();
+  }, []);
 
-        }, containerRef);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert('Thank you for your inquiry. We will contact you shortly.');
+    setFormData({ fullName: '', email: '', phone: '', inquiry: '' });
+  };
 
-        return () => ctx.revert();
-    }, []);
+  return (
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-16 lg:py-24 bg-[#F4F1EA]"
+    >
+      <div className="w-full px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+            {/* Contact Info */}
+            <div ref={contactRef} style={{ opacity: 0 }}>
+              <p className="eyebrow-gold mb-4">Private Consultation</p>
+              <h2
+                className="text-4xl md:text-5xl lg:text-6xl text-[#0B1E2F] mb-6 leading-tight"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                Connect
+                <br />
+                With Us
+              </h2>
+              <p className="text-[#6B7280] leading-relaxed mb-10 max-w-md italic">
+                Begin a bespoke educational journey for your child. Our admissions
+                office provides discreet, personalized support for families seeking
+                excellence.
+              </p>
 
-    return (
-        <div ref={containerRef} className="relative w-full h-full bg-[#F5F3EF] overflow-hidden flex flex-col lg:flex-row border-t border-[#e5e5e5]">
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-white clip-path-diagonal hidden lg:block" />
+              <div className="w-16 h-px bg-[#C9A45C] mb-10" />
 
-            {/* Info Side */}
-            <div className="lg:w-1/2 h-full flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24">
-                <div ref={infoRef} className="max-w-lg">
-                    <span className="walker-nav-link text-[#7A1F2E] text-xs font-bold tracking-[0.2em] mb-6 block opacity-80">
-                        GET IN TOUCH
-                    </span>
-                    <h2 className="walker-heading text-[#2A2A2A] text-5xl lg:text-7xl mb-12 tracking-tight">
-                        Contact Us
-                    </h2>
-
-                    <div className="space-y-10">
-                        <div className="flex items-start gap-6 group">
-                            <div className="p-4 bg-white rounded-full shadow-sm text-[#7A1F2E] border border-gray-100 group-hover:scale-110 transition-transform">
-                                <MapPin className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h3 className="walker-heading text-xl mb-2 group-hover:text-[#7A1F2E] transition-colors">Visit Us</h3>
-                                <p className="walker-body text-[#6A6A6A] text-base leading-relaxed">
-                                    Al Shomoukh International School<br />
-                                    Muscat, Sultanate of Oman
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start gap-6 group">
-                            <div className="p-4 bg-white rounded-full shadow-sm text-[#7A1F2E] border border-gray-100 group-hover:scale-110 transition-transform">
-                                <Phone className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h3 className="walker-heading text-xl mb-2 group-hover:text-[#7A1F2E] transition-colors">Call Us</h3>
-                                <p className="walker-body text-[#6A6A6A] text-base leading-relaxed">
-                                    Main Office: (+968) 24 555 123<br />
-                                    Admissions: (+968) 24 555 124
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start gap-6 group">
-                            <div className="p-4 bg-white rounded-full shadow-sm text-[#7A1F2E] border border-gray-100 group-hover:scale-110 transition-transform">
-                                <Mail className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h3 className="walker-heading text-xl mb-2 group-hover:text-[#7A1F2E] transition-colors">Email Us</h3>
-                                <p className="walker-body text-[#6A6A6A] text-base leading-relaxed">
-                                    info@alshomoukh.edu.om<br />
-                                    admissions@alshomoukh.edu.om
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start gap-6 group">
-                            <div className="p-4 bg-white rounded-full shadow-sm text-[#7A1F2E] border border-gray-100 group-hover:scale-110 transition-transform">
-                                <Clock className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <h3 className="walker-heading text-xl mb-2 group-hover:text-[#7A1F2E] transition-colors">Office Hours</h3>
-                                <p className="walker-body text-[#6A6A6A] text-base leading-relaxed">
-                                    Monday - Friday: 8:00 AM - 4:00 PM
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <MapPin size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-[#0B1E2F] mb-1">
+                      Campus Address
+                    </p>
+                    <p className="text-sm text-[#6B7280]">
+                      Muscat Academic Quarter, Sector 4
+                      <br />
+                      Riyadh, Kingdom of Saudi Arabia
+                    </p>
+                  </div>
                 </div>
+
+                <div className="flex items-start gap-4">
+                  <Phone size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-[#0B1E2F] mb-1">
+                      Direct Admissions
+                    </p>
+                    <p className="text-sm text-[#6B7280]">T: +966 11 400 2000</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <Mail size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-[#0B1E2F] mb-1">
+                      Email
+                    </p>
+                    <p className="text-sm text-[#6B7280]">
+                      admissions@alshomoukh.edu
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <Clock size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-[#0B1E2F] mb-1">
+                      Registry Hours
+                    </p>
+                    <p className="text-sm text-[#6B7280]">
+                      Sunday – Thursday
+                      <br />
+                      08:00 – 16:00
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Form Side */}
-            <div className="lg:w-1/2 h-full flex flex-col justify-center px-8 lg:px-24 py-16 lg:py-24 relative z-10">
-                <div ref={formRef} className="bg-white p-10 lg:p-16 shadow-2xl rounded-sm border border-gray-50">
-                    <h3 className="walker-heading text-3xl mb-8 text-[#7A1F2E]">
-                        Send an Inquiry
-                    </h3>
-                    <form className="space-y-8">
-                        <div className="grid grid-cols-2 gap-8">
-                            <div className="space-y-2 group">
-                                <label className="text-xs font-bold text-[#666] uppercase tracking-wider group-focus-within:text-[#D4A84B] transition-colors">First Name</label>
-                                <input type="text" className="w-full border-b border-[#ddd] py-3 focus:outline-none focus:border-[#7A1F2E] transition-all bg-transparent" />
-                            </div>
-                            <div className="space-y-2 group">
-                                <label className="text-xs font-bold text-[#666] uppercase tracking-wider group-focus-within:text-[#D4A84B] transition-colors">Last Name</label>
-                                <input type="text" className="w-full border-b border-[#ddd] py-3 focus:outline-none focus:border-[#7A1F2E] transition-all bg-transparent" />
-                            </div>
-                        </div>
+            {/* Contact Form */}
+            <div
+              ref={formRef}
+              className="bg-white p-6 lg:p-8 shadow-sm"
+              style={{ opacity: 0 }}
+            >
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs uppercase tracking-wide text-[#6B7280] mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.fullName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, fullName: e.target.value })
+                      }
+                      className="w-full px-4 py-3 border border-[rgba(17,24,39,0.15)] bg-[#F9F9F7] text-sm focus:outline-none focus:border-[#C9A45C] transition-colors duration-300"
+                      placeholder="Enter your full name"
+                      required
+                    />
+                  </div>
 
-                        <div className="space-y-2 group">
-                            <label className="text-xs font-bold text-[#666] uppercase tracking-wider group-focus-within:text-[#D4A84B] transition-colors">Email Address</label>
-                            <input type="email" className="w-full border-b border-[#ddd] py-3 focus:outline-none focus:border-[#7A1F2E] transition-all bg-transparent" />
-                        </div>
-
-                        <div className="space-y-2 group">
-                            <label className="text-xs font-bold text-[#666] uppercase tracking-wider group-focus-within:text-[#D4A84B] transition-colors">Message</label>
-                            <textarea rows={4} className="w-full border-b border-[#ddd] py-3 focus:outline-none focus:border-[#7A1F2E] transition-all resize-none bg-transparent"></textarea>
-                        </div>
-
-                        <button type="submit" className="walker-btn-primary w-full py-5 text-sm tracking-[0.2em] font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
-                            Send Message
-                        </button>
-                    </form>
+                  <div>
+                    <label className="block text-xs uppercase tracking-wide text-[#6B7280] mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="w-full px-4 py-3 border border-[rgba(17,24,39,0.15)] bg-[#F9F9F7] text-sm focus:outline-none focus:border-[#C9A45C] transition-colors duration-300"
+                      placeholder="email@example.com"
+                      required
+                    />
+                  </div>
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs uppercase tracking-wide text-[#6B7280] mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
+                      className="w-full px-4 py-3 border border-[rgba(17,24,39,0.15)] bg-[#F9F9F7] text-sm focus:outline-none focus:border-[#C9A45C] transition-colors duration-300"
+                      placeholder="+00 000 000 000"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs uppercase tracking-wide text-[#6B7280] mb-2">
+                      Academic Year
+                    </label>
+                    <select
+                      className="w-full px-4 py-3 border border-[rgba(17,24,39,0.15)] bg-[#F9F9F7] text-sm focus:outline-none focus:border-[#C9A45C] transition-colors duration-300 appearance-none cursor-pointer"
+                    >
+                      <option>2024 - 2025</option>
+                      <option>2025 - 2026</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase tracking-wide text-[#6B7280] mb-2">
+                    Your Inquiry
+                  </label>
+                  <textarea
+                    value={formData.inquiry}
+                    onChange={(e) =>
+                      setFormData({ ...formData, inquiry: e.target.value })
+                    }
+                    rows={4}
+                    className="w-full px-4 py-3 border border-[rgba(17,24,39,0.15)] bg-[#F9F9F7] text-sm focus:outline-none focus:border-[#C9A45C] transition-colors duration-300 resize-none"
+                    placeholder="How may we assist you today?"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-[#0B1E2F] text-white text-sm font-medium tracking-wide hover:bg-[#1a3045] transition-colors duration-300 flex items-center justify-center gap-2 group"
+                >
+                  Schedule Consultation
+                  <ArrowRight
+                    size={16}
+                    className="transform group-hover:translate-x-1 transition-transform duration-300"
+                  />
+                </button>
+              </form>
             </div>
+          </div>
         </div>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default ContactSection;

@@ -1,86 +1,62 @@
-import { useRef } from 'react';
-import gsap from 'gsap';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Header from './sections/Header';
-import HeroSection from './sections/HeroSection';
-import AboutSection from './sections/AboutSection';
-import AcademicsSection from './sections/AcademicsSection';
-import StudentLifeSection from './sections/StudentLifeSection';
-import AdmissionSection from './sections/AdmissionSection';
-import CampusSection from './sections/CampusSection';
-import NewsSection from './sections/NewsSection';
-import ContactSection from './sections/ContactSection';
-import FooterSection from './sections/FooterSection';
-import ChatBot from './components/ChatBot';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+
+// Pages
+import Home from './pages/Home';
+import TermDates from './pages/TermDates';
+import Scholarships from './pages/Scholarships';
+import Alumni from './pages/Alumni';
+import Careers from './pages/Careers';
+import Academy from './pages/Academy';
+import Admissions from './pages/Admissions';
+import CampusTour from './pages/CampusTour';
+import Contact from './pages/Contact';
+import Connect from './pages/Connect';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
-  const containerRef = useRef<HTMLDivElement>(null);
+const App = () => {
+  useEffect(() => {
+    // Refresh ScrollTrigger on mount
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
 
-  // Smooth Scroll using Lenis
-  // If Lenis is not available, we can just use native scroll or install it. 
-  // Since I don't see lenis in package.json, I will use a simple native scroll for now, 
-  // but if the user wants "premium" feel, smooth scroll library like Lenis is recommended.
-  // For now, I'll stick to native scroll as it's robust, but add CSS smooth scroll.
+    const handleLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', handleLoad);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('load', handleLoad);
+    };
+  }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-white">
-      {/* Fixed Header */}
-      <Header />
-
-      {/* Main Vertical Container */}
-      <main ref={containerRef} className="flex flex-col w-full">
-        {/* 1. Hero */}
-        <section id="hero" className="w-full h-screen relative">
-          <HeroSection />
-        </section>
-
-        {/* 2. About */}
-        <section id="about" className="w-full min-h-screen relative">
-          <AboutSection />
-        </section>
-
-        {/* 3. Academics */}
-        <section id="academics" className="w-full min-h-screen relative">
-          <AcademicsSection />
-        </section>
-
-        {/* 4. Student Life */}
-        <section id="student-life" className="w-full min-h-screen relative">
-          <StudentLifeSection />
-        </section>
-
-        {/* 5. Admissions */}
-        <section id="admissions" className="w-full min-h-screen relative">
-          <AdmissionSection />
-        </section>
-
-        {/* 6. Campus */}
-        <section id="campus" className="w-full min-h-screen relative">
-          <CampusSection />
-        </section>
-
-        {/* 7. News */}
-        <section id="news" className="w-full min-h-screen relative">
-          <NewsSection />
-        </section>
-
-        {/* 8. Contact */}
-        <section id="contact" className="w-full min-h-screen relative">
-          <ContactSection />
-        </section>
-
-        {/* 9. Footer */}
-        <section id="footer" className="w-full relative">
-          <FooterSection />
-        </section>
-      </main>
-
-      {/* Chat Bot */}
-      <ChatBot />
-    </div>
+    <Router>
+      <ScrollToTop />
+      <div className="bg-[#F4F1EA] min-h-screen">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/term-dates" element={<TermDates />} />
+          <Route path="/scholarships" element={<Scholarships />} />
+          <Route path="/alumni" element={<Alumni />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/academy" element={<Academy />} />
+          <Route path="/admissions" element={<Admissions />} />
+          <Route path="/campus-tour" element={<CampusTour />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/connect" element={<Connect />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
