@@ -13,7 +13,7 @@ import ShomoukhStandardSection from '../sections/ShomoukhStandardSection';
 import JournalSection from '../sections/JournalSection';
 import FinalCTASection from '../sections/FinalCTASection';
 import ContactSection from '../sections/ContactSection';
-const Chatbot = lazy(() => import('../components/Chatbot'));
+const Chatbot = lazy(() => import('@/components/Chatbot'));
 
 const Home = () => {
     return (
