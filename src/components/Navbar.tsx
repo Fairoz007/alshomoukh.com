@@ -61,8 +61,8 @@ const Navbar = () => {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || location.pathname !== '/'
-            ? 'bg-[#F4F1EA]/95 backdrop-blur-md shadow-sm border-b border-gray-100'
-            : 'bg-transparent'
+          ? 'bg-[#F4F1EA]/95 backdrop-blur-md shadow-sm border-b border-gray-100'
+          : 'bg-transparent'
           }`}
       >
         <div className="w-full px-6 lg:px-12">
@@ -70,7 +70,10 @@ const Navbar = () => {
             {/* Logo */}
             <Link
               to="/"
-              onClick={() => window.scrollTo(0, 0)}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                setIsMobileMenuOpen(false);
+              }}
               className="text-xl font-semibold tracking-[0.15em] text-[#0B1E2F]"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
@@ -80,36 +83,47 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavigation(link.href)}
-                  className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide"
-                >
-                  {link.name}
-                </button>
+                link.href.startsWith('/#') ? (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavigation(link.href)}
+                    className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide"
+                  >
+                    {link.name}
+                  </button>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </div>
 
             {/* Desktop CTA Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <button
-                onClick={() => handleNavigation('/contact')}
+              <Link
+                to="/contact"
                 className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
               >
                 Enquire
-              </button>
-              <button
-                onClick={() => handleNavigation('/admissions')}
+              </Link>
+              <Link
+                to="/admissions"
                 className="px-5 py-2.5 border border-[#C9A45C] text-[#0B1E2F] text-sm font-medium tracking-wide transition-all duration-300 hover:bg-[#C9A45C] hover:text-white"
               >
                 Apply Now
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 text-[#0B1E2F]"
+              aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -124,29 +138,43 @@ const Navbar = () => {
       >
         <div className="flex flex-col items-center justify-start pt-32 pb-10 min-h-full gap-6 px-6">
           {mobileLinks.map((link) => (
-            <button
-              key={link.name}
-              onClick={() => handleNavigation(link.href)}
-              className="text-2xl font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
-            >
-              {link.name}
-            </button>
+            link.href.startsWith('/#') ? (
+              <button
+                key={link.name}
+                onClick={() => handleNavigation(link.href)}
+                className="text-2xl font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                {link.name}
+              </button>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-2xl font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                {link.name}
+              </Link>
+            )
           ))}
           <div className="w-16 h-px bg-[#C9A45C] my-4" />
           <div className="flex flex-col items-center gap-4 w-full">
-            <button
-              onClick={() => handleNavigation('/contact')}
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
             >
               Enquire
-            </button>
-            <button
-              onClick={() => handleNavigation('/admissions')}
+            </Link>
+            <Link
+              to="/admissions"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="px-8 py-3 border border-[#C9A45C] text-[#0B1E2F] text-lg font-medium tracking-wide transition-all duration-300 hover:bg-[#C9A45C] hover:text-white w-full max-w-xs text-center"
             >
               Apply Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
