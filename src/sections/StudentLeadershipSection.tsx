@@ -46,13 +46,13 @@ const StudentLeadershipSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden bg-[#F4F1EA]"
+      className="relative w-full min-h-screen overflow-hidden bg-[#F4F1EA]"
     >
       <div className="flex flex-col lg:flex-row h-full">
         {/* Student Image */}
         <div
           ref={imageRef}
-          className="w-full lg:w-[55vw] h-[50vh] lg:h-full relative will-change-transform"
+          className="w-full lg:w-[55vw] h-[50vh] lg:h-auto relative will-change-transform"
           style={{ opacity: 0 }}
         >
           <img
@@ -65,7 +65,7 @@ const StudentLeadershipSection = () => {
         </div>
 
         {/* Leadership Card */}
-        <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-12 py-12 lg:py-0">
           <div
             ref={cardRef}
             className="bg-white border border-[rgba(17,24,39,0.1)] p-8 lg:p-10 max-w-md relative will-change-transform"

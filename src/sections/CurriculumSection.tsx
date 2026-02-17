@@ -50,11 +50,11 @@ const CurriculumSection = () => {
         { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
       )
-      .fromTo(cards.children,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
-        '-=0.3'
-      );
+        .fromTo(cards.children,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+          '-=0.3'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -64,9 +64,9 @@ const CurriculumSection = () => {
     <section
       ref={sectionRef}
       id="curriculum"
-      className="py-16 lg:py-24 bg-[#F4F1EA]"
+      className="py-12 sm:py-16 lg:py-24 bg-[#F4F1EA]"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
           ref={headerRef}
@@ -75,7 +75,7 @@ const CurriculumSection = () => {
         >
           <p className="eyebrow-gold mb-4">Curriculum Overview</p>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl text-[#0B1E2F] leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl text-[#0B1E2F] leading-tight"
             style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             A Seamless Journey from Foundation to Graduation
@@ -85,7 +85,7 @@ const CurriculumSection = () => {
         {/* Cards */}
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {curriculumStages.map((stage, index) => (
             <div

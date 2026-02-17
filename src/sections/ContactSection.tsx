@@ -36,11 +36,11 @@ const ContactSection = () => {
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
       )
-      .fromTo(form,
-        { x: 30, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.3'
-      );
+        .fromTo(form,
+          { x: 30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+          '-=0.3'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -56,9 +56,9 @@ const ContactSection = () => {
     <section
       ref={sectionRef}
       id="contact"
-      className="py-16 lg:py-24 bg-[#F4F1EA]"
+      className="py-12 sm:py-16 lg:py-24 bg-[#F4F1EA]"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Contact Info */}

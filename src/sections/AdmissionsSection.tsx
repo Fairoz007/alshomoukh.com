@@ -56,21 +56,21 @@ const AdmissionsSection = () => {
         { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
       )
-      .fromTo(timeline.querySelector('.timeline-line'),
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.6, ease: 'power2.out' },
-        '-=0.2'
-      )
-      .fromTo(timeline.querySelectorAll('.step-circle'),
-        { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'back.out(1.5)' },
-        '-=0.4'
-      )
-      .fromTo(timeline.querySelectorAll('.step-content'),
-        { y: 15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
-        '-=0.3'
-      );
+        .fromTo(timeline.querySelector('.timeline-line'),
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.6, ease: 'power2.out' },
+          '-=0.2'
+        )
+        .fromTo(timeline.querySelectorAll('.step-circle'),
+          { scale: 0.6, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'back.out(1.5)' },
+          '-=0.4'
+        )
+        .fromTo(timeline.querySelectorAll('.step-content'),
+          { y: 15, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
+          '-=0.3'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -80,9 +80,9 @@ const AdmissionsSection = () => {
     <section
       ref={sectionRef}
       id="admissions"
-      className="py-16 lg:py-24 bg-[#F4F1EA]"
+      className="py-12 sm:py-16 lg:py-24 bg-[#F4F1EA]"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
           ref={headerRef}
@@ -91,7 +91,7 @@ const AdmissionsSection = () => {
         >
           <p className="eyebrow-gold mb-4">Admissions</p>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl text-[#0B1E2F] mb-4 leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl text-[#0B1E2F] mb-4 leading-tight"
             style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             Your Child's Journey to Excellence Begins Here

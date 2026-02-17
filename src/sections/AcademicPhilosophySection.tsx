@@ -53,13 +53,13 @@ const AcademicPhilosophySection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden bg-[#F4F1EA]"
+      className="relative w-full min-h-screen overflow-hidden bg-[#F4F1EA]"
     >
       <div className="flex flex-col lg:flex-row items-center h-full">
         {/* Image Card */}
         <div
           ref={imageCardRef}
-          className="w-full lg:w-[44vw] h-[40vh] lg:h-[72vh] relative mx-6 lg:ml-[6vw] will-change-transform"
+          className="w-full lg:w-[44vw] h-[40vh] lg:h-[72vh] relative mx-6 lg:ml-[6vw] will-change-transform mt-12 lg:mt-0"
           style={{ opacity: 0 }}
         >
           <div className="relative w-full h-full overflow-hidden">
@@ -87,7 +87,7 @@ const AcademicPhilosophySection = () => {
         </div>
 
         {/* Text Block */}
-        <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-12 py-12 lg:py-0">
           <div
             ref={textBlockRef}
             className="max-w-lg will-change-transform"
@@ -95,7 +95,7 @@ const AcademicPhilosophySection = () => {
           >
             <p className="eyebrow-gold mb-4">Academic Heritage</p>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl text-[#0B1E2F] mb-6 leading-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl text-[#0B1E2F] mb-6 leading-tight"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               An Uncompromising Pursuit of Intellectual Depth

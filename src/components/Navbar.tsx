@@ -65,8 +65,8 @@ const Navbar = () => {
           : 'bg-transparent'
           }`}
       >
-        <div className="w-full px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link
               to="/"
@@ -81,7 +81,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 link.href.startsWith('/#') ? (
                   <button
@@ -104,7 +104,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop CTA Buttons */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
               <Link
                 to="/contact"
                 className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
@@ -122,7 +122,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-[#0B1E2F]"
+              className="md:hidden p-2 text-[#0B1E2F]"
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -133,7 +133,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-[#F4F1EA] transition-transform duration-500 lg:hidden overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-0 z-40 bg-[#F4F1EA] transition-transform duration-500 md:hidden overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col items-center justify-start pt-32 pb-10 min-h-full gap-6 px-6">

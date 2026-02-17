@@ -102,7 +102,7 @@ const FacilitiesSection = () => {
     <section
       ref={sectionRef}
       id="facilities"
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full min-h-screen overflow-hidden py-16 lg:py-0"
     >
       {/* Background Image */}
       <div
@@ -120,7 +120,7 @@ const FacilitiesSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 lg:px-12">
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Headline Block */}
         <div
           ref={headlineRef}
@@ -151,8 +151,8 @@ const FacilitiesSection = () => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${activeTab === tab
-                  ? 'bg-[#0B1E2F] text-white'
-                  : 'bg-white/80 text-[#0B1E2F] hover:bg-white'
+                ? 'bg-[#0B1E2F] text-white'
+                : 'bg-white/80 text-[#0B1E2F] hover:bg-white'
                 }`}
             >
               {tab}

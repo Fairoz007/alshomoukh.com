@@ -36,11 +36,11 @@ const StatsSection = () => {
         { scaleX: 0 },
         { scaleX: 1, duration: 0.5, ease: 'power2.out' }
       )
-      .fromTo(statsContainer.children,
-        { y: 15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
-        '-=0.3'
-      );
+        .fromTo(statsContainer.children,
+          { y: 15, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
+          '-=0.3'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -49,9 +49,9 @@ const StatsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-24 bg-[#F4F1EA]"
+      className="py-12 sm:py-16 lg:py-24 bg-[#F4F1EA]"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           {/* Gold Rule */}
           <div
@@ -63,7 +63,7 @@ const StatsSection = () => {
           {/* Stats Grid */}
           <div
             ref={statsRef}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
           >
             {stats.map((stat, index) => (
               <div key={index} className="text-center">

@@ -52,7 +52,7 @@ const FinalCTASection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full min-h-screen overflow-hidden"
     >
       {/* Background Image */}
       <div
@@ -70,14 +70,14 @@ const FinalCTASection = () => {
       </div>
 
       {/* CTA Block */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-6 lg:px-12">
+      <div className="relative z-10 w-full min-h-screen flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={ctaBlockRef}
-          className="bg-[rgba(244,241,234,0.95)] backdrop-blur-sm p-10 lg:p-16 max-w-2xl text-center will-change-transform"
+          className="bg-[rgba(244,241,234,0.95)] backdrop-blur-sm p-8 sm:p-10 lg:p-16 max-w-2xl text-center will-change-transform rounded-sm"
           style={{ opacity: 0 }}
         >
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl text-[#0B1E2F] mb-6 leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl text-[#0B1E2F] mb-6 leading-tight"
             style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             Begin Your Journey Toward Global Leadership
@@ -86,16 +86,16 @@ const FinalCTASection = () => {
             Applications are open for the 2025–2026 academic year. Schedule your
             private tour today.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
               onClick={() => alert('Prospectus download coming soon!')}
-              className="btn-primary"
+              className="btn-primary w-full sm:w-auto text-center"
             >
               Download Prospectus
             </button>
             <button
               onClick={() => scrollToSection('#facilities')}
-              className="btn-outline-dark"
+              className="btn-outline-dark w-full sm:w-auto text-center"
             >
               Book a Campus Tour
             </button>

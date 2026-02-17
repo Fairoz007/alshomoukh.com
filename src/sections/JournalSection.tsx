@@ -73,16 +73,16 @@ const JournalSection = () => {
         { y: 15, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
       )
-      .fromTo(content.querySelectorAll('.article-card'),
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
-        '-=0.3'
-      )
-      .fromTo(sidebar,
-        { x: 30, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.3'
-      );
+        .fromTo(content.querySelectorAll('.article-card'),
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
+          '-=0.3'
+        )
+        .fromTo(sidebar,
+          { x: 30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+          '-=0.3'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -97,9 +97,9 @@ const JournalSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-24 bg-[#F4F1EA]"
+      className="py-12 sm:py-16 lg:py-24 bg-[#F4F1EA]"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
           ref={headerRef}

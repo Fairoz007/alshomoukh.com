@@ -60,9 +60,9 @@ const ShomoukhStandardSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden bg-[#F4F1EA]"
+      className="relative w-full min-h-screen overflow-hidden bg-[#F4F1EA] py-16 lg:py-0"
     >
-      <div className="flex flex-col items-center justify-center h-full px-6 lg:px-12">
+      <div className="flex flex-col items-center justify-center min-h-screen h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Headline */}
         <div
           ref={headlineRef}

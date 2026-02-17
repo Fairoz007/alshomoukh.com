@@ -59,7 +59,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
       <div
@@ -77,13 +77,13 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full h-full flex items-center">
-        <div className="w-full px-6 lg:px-12 py-20">
+      <div className="relative z-10 w-full flex items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-0">
           <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
             {/* Headline Block */}
             <div
               ref={headlineBlockRef}
-              className="bg-[rgba(244,241,234,0.9)] backdrop-blur-sm p-8 lg:p-10 max-w-xl will-change-transform"
+              className="bg-[rgba(244,241,234,0.9)] backdrop-blur-sm p-6 sm:p-8 lg:p-10 max-w-xl will-change-transform rounded-sm"
               style={{ opacity: 0 }}
             >
               <div className="w-16 h-px bg-[#C9A45C] mb-6" />
@@ -91,7 +91,7 @@ const HeroSection = () => {
                 International Education Since 1994
               </p>
               <h1
-                className="text-4xl md:text-5xl lg:text-6xl text-[#0B1E2F] mb-6 leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl text-[#0B1E2F] mb-6 leading-tight"
                 style={{ fontFamily: 'Cormorant Garamond, serif' }}
               >
                 Cultivating Excellence.
@@ -102,16 +102,16 @@ const HeroSection = () => {
                 A rigorous, inquiry-driven curriculum that prepares students to
                 thrive at top universities—and in life.
               </p>
-              <div ref={ctaRef} className="flex flex-wrap gap-4">
+              <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => scrollToSection('#admissions')}
-                  className="btn-primary"
+                  className="btn-primary w-full sm:w-auto text-center"
                 >
                   Apply for Admission
                 </button>
                 <button
                   onClick={() => scrollToSection('#facilities')}
-                  className="btn-outline-dark"
+                  className="btn-outline-dark w-full sm:w-auto text-center"
                 >
                   Schedule a Private Visit
                 </button>
