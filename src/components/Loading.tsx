@@ -1,184 +1,199 @@
 import { motion } from 'framer-motion';
 
-const Page = ({ index, customDelay }: { index: number, customDelay: number }) => {
-    // We'll use a continuous loop for the rotation
-    // Each page rotates 0 -> -180 -> 0
-
+const Page = ({ index, zIndex, rotateDelay }: { index: number; zIndex: number; rotateDelay: number }) => {
     return (
         <motion.div
-            className="absolute top-[4px] bottom-[4px] left-[10px] w-[215px] origin-left transform-style-3d"
+            className="absolute top-1 bottom-1 left-0 w-[148px] origin-left transform-style-3d backface-hidden"
+            style={{ zIndex }}
             initial={{ rotateY: 0 }}
-            animate={{ rotateY: -176 + (index * 2) }} // Fan out slightly
+            animate={{ rotateY: -180 }}
             transition={{
-                duration: 2.5,
-                ease: [0.645, 0.045, 0.355, 1.0] as const, // "easeInOutCubic"
-                delay: customDelay,
+                duration: 2,
+                delay: rotateDelay,
+                ease: [0.645, 0.045, 0.355, 1.0], // cubic-bezier
                 repeat: Infinity,
-                repeatType: "mirror",
-                repeatDelay: 0.5
+                repeatDelay: 1, // Wait before closing/repeating
+                repeatType: "reverse"
             }}
-            style={{ zIndex: 10 - index }}
         >
-            {/* --- FRONT OF PAGE --- */}
-            <div className="absolute inset-0 backface-hidden bg-[#fdfbf6] rounded-r-sm border-l-[1px] border-gray-200 overflow-hidden shadow-sm">
-                {/* Dynamic Highlight/Shadow to simulate Curl */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-50" />
+            {/* Front of Page (Right side content) */}
+            <div className="absolute inset-0 bg-[#fdfbf6] rounded-r-md border-l border-gray-200 overflow-hidden shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-transparent to-transparent opacity-40 w-8" />
+                <div className="absolute inset-0 bg-gradient-to-l from-black/5 to-transparent w-4 right-0" />
 
-                {/* Content Texture */}
-                <div className="p-8 pt-10 opacity-30 flex flex-col gap-4">
-                    <div className="h-1 bg-slate-800 w-full rounded-full" />
-                    <div className="h-1 bg-slate-800 w-5/6 rounded-full" />
-                    <div className="h-1 bg-slate-800 w-full rounded-full" />
-                    <div className="h-1 bg-slate-800 w-4/5 rounded-full" />
+                {/* Placeholder Text Lines */}
+                <div className="p-4 pt-6 opacity-60">
+                    <h3 className="text-[6px] font-serif font-bold text-[#0B1E2F] mb-1">Global Vision</h3>
+                    <div className="space-y-1">
+                        <p className="text-[4px] leading-[1.4] text-justify text-slate-600 font-serif">
+                            Our commitment to excellence drives every aspect of our educational
+                            approach. We foster an environment where curiosity thrives and
+                            students are empowered to explore their potential.
+                        </p>
+                        <p className="text-[4px] leading-[1.4] text-justify text-slate-600 font-serif">
+                            Through a rigorous curriculum and diverse extracurricular
+                            opportunities, we prepare leaders for tomorrow's challenges.
+                        </p>
+                    </div>
                 </div>
 
-                {/* Spine Shadow */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black/20 to-transparent" />
+                {/* Page Number */}
+                <div className="absolute bottom-2 right-2 text-[5px] text-slate-400 font-serif">
+                    {index * 2 - 1}
+                </div>
             </div>
 
-            {/* --- BACK OF PAGE (Seen when flipped) --- */}
-            <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#fdfbf6] rounded-l-sm overflow-hidden shadow-sm">
-                {/* Content Texture */}
-                <div className="p-8 pt-10 opacity-30 flex flex-col gap-4 items-end">
-                    <div className="h-1 bg-slate-800 w-full rounded-full" />
-                    <div className="h-1 bg-slate-800 w-11/12 rounded-full" />
-                    <div className="h-1 bg-slate-800 w-3/4 rounded-full" />
+            {/* Back of Page (Left side content) */}
+            <div className="absolute inset-0 rotate-y-180 bg-[#fdfbf6] rounded-l-md border-r border-gray-200 overflow-hidden shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-l from-gray-100 via-transparent to-transparent opacity-40 w-8 right-0" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent w-4 left-0" />
+
+                {/* Placeholder Text Lines */}
+                <div className="p-4 pt-6 opacity-60 flex flex-col items-start text-left">
+                    <h3 className="text-[6px] font-serif font-bold text-[#0B1E2F] mb-1">Academic Excellence</h3>
+                    <div className="space-y-1">
+                        <p className="text-[4px] leading-[1.4] text-justify text-slate-600 font-serif">
+                            Innovation and tradition blend seamlessly in our halls. We value
+                            integrity, respect, and community service as pillars of
+                            character development.
+                        </p>
+                        <p className="text-[4px] leading-[1.4] text-justify text-slate-600 font-serif">
+                            Every student is unique, and our personalized learning paths ensure
+                            that each individual receives the support they need to succeed.
+                        </p>
+                    </div>
                 </div>
 
-                {/* Spine Shadow (on the back side) */}
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black/20 to-transparent" />
+                {/* Page Number */}
+                <div className="absolute bottom-2 left-2 text-[5px] text-slate-400 font-serif">
+                    {index * 2}
+                </div>
             </div>
         </motion.div>
+    );
+};
+
+const Cover = () => {
+    return (
+        <motion.div
+            className="absolute inset-0 origin-left transform-style-3d z-50 pointer-events-none"
+            initial={{ rotateY: 0 }}
+            animate={{ rotateY: -180 }}
+            transition={{
+                duration: 2,
+                ease: [0.645, 0.045, 0.355, 1.0],
+                repeat: Infinity,
+                repeatDelay: 1,
+                repeatType: "reverse"
+            }}
+        >
+            {/* FRONT COVER (Outside) */}
+            <div className="absolute inset-0 backface-hidden bg-[#0B1E2F] rounded-r-md rounded-l-sm shadow-xl border-l border-white/10">
+                {/* Texture */}
+                <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/leather.png')] mix-blend-overlay" />
+
+                {/* Spine Highlight */}
+                <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white/20 to-transparent" />
+
+                {/* Cover Design */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="border-y border-[#C9A45C]/50 w-full px-4 py-6 flex flex-col items-center gap-1">
+                        <h1 className="text-[#C9A45C] font-serif text-lg font-bold tracking-widest text-center leading-tight" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                            AL<br />SHOMOUKH
+                        </h1>
+                        <div className="h-px w-12 bg-[#C9A45C]/50" />
+                        <span className="text-[8px] text-[#C9A45C]/70 uppercase tracking-[0.3em]">Est. 1994</span>
+                    </div>
+                </div>
+
+                {/* Thickness (Right Edge) */}
+                <div className="absolute top-0 bottom-0 right-0 w-[4px] bg-[#091520] rotate-y-90 translate-x-[2px] translate-z-[-2px]" />
+            </div>
+
+            {/* FRONT COVER (Inside) */}
+            <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0E253A] rounded-l-md rounded-r-sm shadow-inner">
+                <div className="absolute inset-0 bg-black/10 mix-blend-multiply" />
+                {/* Liner Paper */}
+                <div className="absolute inset-2 bg-[#F4F1EA] opacity-5 rounded-sm" />
+            </div>
+        </motion.div>
+    );
+};
+
+const BackCover = () => {
+    return (
+        <div className="absolute inset-0 flex items-center justify-center transform-style-3d z-0">
+            {/* Static Back Cover (Lying flat) */}
+            <div className="absolute inset-0 bg-[#0B1E2F] rounded-r-md rounded-l-sm shadow-2xl translate-z-[-2px]">
+                {/* Thickness (Bottom Edge) */}
+                <div className="absolute left-0 right-0 bottom-0 h-[4px] bg-[#091520] rotate-x-90 translate-y-[2px]" />
+
+                {/* Visible Inside of Back Cover (Right side base) */}
+                <div className="absolute inset-0 bg-[#0E253A] rounded-r-md rounded-l-sm">
+                    <div className="absolute inset-2 bg-[#F4F1EA] opacity-5 rounded-sm" />
+                    {/* Shadow cast by pages */}
+                    <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-black/20 to-transparent" />
+                </div>
+            </div>
+
+            {/* Pages Stack (Static on the right) */}
+            <div className="absolute top-1 bottom-1 right-1 left-1 bg-[#fdfbf6] rounded-r-sm border-l border-gray-200">
+                <div className="absolute top-0 bottom-0 right-0 w-[3px] bg-[#eee] border-l border-gray-300 transform translate-x-1" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent w-6" />
+            </div>
+        </div>
     );
 };
 
 const Loading = () => {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#F4F1EA] overflow-hidden">
-            {/* Ambient Room Light */}
-            <div className="absolute inset-0 bg-gradient-to-tl from-[#e8e4db] via-[#f4f1ea] to-[#fffefb]" />
+            {/* Ambient BG */}
+            <div className="absolute inset-0 bg-gradient-to-tl from-[#e6dfd1] via-[#F4F1EA] to-[#fffefb]" />
 
-            {/* 3D Scene Wrapper */}
-            <div className="relative w-full h-full flex items-center justify-center perspective-[1500px]">
+            {/* Scene Container */}
+            <div className="relative w-full h-full flex items-center justify-center perspective-1000">
 
-                {/* Book Object - Floating */}
+                {/* Book Container */}
                 <motion.div
-                    className="relative w-[230px] h-[320px] transform-style-3d"
+                    className="relative w-[150px] h-[220px] transform-style-3d"
                     initial={{ rotateX: 60, rotateZ: -10, rotateY: 0 }}
                     animate={{
-                        rotateX: [60, 50, 60],
-                        rotateZ: [-10, -5, -10],
-                        y: [0, -15, 0]
+                        rotateX: 50,
+                        y: [-10, 0, -10],
                     }}
                     transition={{
                         duration: 6,
+                        ease: "easeInOut",
                         repeat: Infinity,
-                        ease: "easeInOut"
                     }}
                 >
-                    {/* Drop Shadow on "Table" */}
-                    <motion.div
-                        className="absolute top-16 left-8 w-[90%] h-full bg-black/20 blur-3xl rounded-[40px] translate-z-[-80px]"
-                        animate={{ opacity: [0.3, 0.5, 0.3], scale: [0.9, 1.05, 0.9] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    />
+                    {/* Shadow Pool */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[200px] h-[20px] bg-black/10 blur-xl rounded-full scale-110 translate-y-8" />
 
-                    {/* --- BOTTOM COVER BLOCK --- */}
-                    <div className="absolute inset-0 transform-style-3d translate-z-[-5px]">
-                        {/* Top Face (Inside Back Cover) */}
-                        <div className="absolute inset-0 bg-[#0B1E2F] rounded-r-md rounded-l-sm" />
-                        {/* Bottom Face (Outside Back Cover) */}
-                        <div className="absolute inset-0 bg-[#0B1E2F] rounded-r-md rounded-l-sm translate-z-[-10px] shadow-2xl" />
-                        {/* Edges */}
-                        <div className="absolute top-0 bottom-0 right-[0px] w-[10px] bg-[#09192b] rotate-y-[90deg] translate-x-[5px] translate-z-[-5px]" />
-                        <div className="absolute left-0 right-0 bottom-[0px] h-[10px] bg-[#09192b] rotate-x-[-90deg] translate-y-[5px] translate-z-[-5px]" />
-                        <div className="absolute top-0 bottom-0 left-[0px] w-[10px] bg-[#0f2133] rotate-y-[-90deg] translate-x-[-5px] translate-z-[-5px]" />
-                    </div>
+                    {/* Components */}
+                    <BackCover />
 
-                    {/* --- STATIC PAGES BLOCK (Right side) --- */}
-                    <div className="absolute top-[4px] bottom-[4px] right-[4px] w-[212px] transform-style-3d translate-z-[0px]">
-                        {/* Top visible page (Right side static) */}
-                        <div className="absolute inset-0 bg-[#fdfbf6] rounded-r-sm shadow-inner border-l border-gray-200">
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent w-8" />
-                            <div className="p-8 pt-10 opacity-15 flex flex-col gap-4">
-                                <div className="h-1 bg-black w-full rounded-full" />
-                                <div className="h-1 bg-black w-3/4 rounded-full" />
-                                <div className="h-1 bg-black w-full rounded-full" />
-                                <div className="h-1 bg-black w-5/6 rounded-full" />
-                            </div>
-                        </div>
-                        {/* Edge Thickness */}
-                        <div className="absolute top-0 bottom-0 right-0 w-[12px] bg-[#f2f0e6] rotate-y-[90deg] translate-x-[6px] translate-z-[-6px] border-l border-r border-gray-300/[0.3]">
-                            <div className="w-full h-full opacity-30 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#000_3px)]" />
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#f2f0e6] rotate-x-[-90deg] translate-y-[6px] translate-z-[-6px] border-t border-b border-gray-300/[0.3]">
-                            <div className="w-full h-full opacity-30 bg-[repeating-linear-gradient(90deg,transparent,transparent_2px,#000_3px)]" />
-                        </div>
-                    </div>
+                    {/* Animated Pages */}
+                    <Page index={1} zIndex={5} rotateDelay={0.3} />
+                    <Page index={2} zIndex={4} rotateDelay={0.4} />
+                    <Page index={3} zIndex={3} rotateDelay={0.5} />
+                    <Page index={4} zIndex={2} rotateDelay={0.6} />
 
-                    {/* --- ANIMATED FLIPPING PAGES --- */}
-                    {/* We use a component to handle individualized animations */}
-                    <Page index={0} customDelay={0.2} />
-                    <Page index={1} customDelay={0.35} />
-                    <Page index={2} customDelay={0.5} />
-
-
-                    {/* --- TOP COVER (Thick Slab) --- */}
-                    <motion.div
-                        className="absolute inset-0 origin-left transform-style-3d bg-[#0B1E2F] rounded-r-md rounded-l-sm"
-                        initial={{ rotateY: 0 }}
-                        animate={{ rotateY: -160 }}
-                        transition={{
-                            duration: 2.5,
-                            ease: [0.645, 0.045, 0.355, 1.0] as const,
-                            repeat: Infinity,
-                            repeatType: "mirror",
-                            repeatDelay: 0.5
-                        }}
-                        style={{ zIndex: 20 }}
-                    >
-                        {/* Outer Face */}
-                        <div className="absolute inset-0 backface-hidden flex flex-col items-center justify-center translate-z-[1px]">
-                            {/* Leather Texture Material */}
-                            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/leather.png')] mixture-overlay" />
-
-                            {/* Gold Elements */}
-                            <div className="relative border-y-[1px] border-[#C9A45C]/60 w-[80%] py-8 flex flex-col items-center">
-                                <h1 className="text-[#C9A45C] font-serif text-3xl font-bold tracking-[0.25em] text-center" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                                    AL<br />SHOMOUKH
-                                </h1>
-                                <span className="text-[8px] text-[#C9A45C]/80 uppercase tracking-[0.3em] mt-3">Est. 1994</span>
-                            </div>
-
-                            {/* Spine Lighting */}
-                            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-                        </div>
-
-                        {/* Inner Face */}
-                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0B1E2F] rounded-l-sm rounded-r-md translate-z-[1px]">
-                            <div className="absolute inset-0 bg-[#0E253A]" /> {/* Liner paper color */}
-                            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black/20 to-transparent" />
-                        </div>
-
-                        {/* Thickness Faces for Cover */}
-                        <div className="absolute top-0 bottom-0 right-[0px] w-[4px] bg-[#0E253A] rotate-y-[90deg] translate-x-[2px]" />
-                        <div className="absolute top-0 bottom-0 left-[0px] w-[4px] bg-[#15293d] rotate-y-[-90deg] translate-x-[-2px]" />
-                        <div className="absolute left-0 right-0 top-[0px] h-[4px] bg-[#0E253A] rotate-x-[90deg] translate-y-[-2px]" />
-                        <div className="absolute left-0 right-0 bottom-[0px] h-[4px] bg-[#0E253A] rotate-x-[-90deg] translate-y-[2px]" />
-                    </motion.div>
+                    <Cover />
 
                 </motion.div>
 
-                {/* Loading Indicator */}
-                <div className="absolute bottom-12 right-12 flex flex-col items-end gap-3 opacity-90">
-                    <span className="text-[#0B1E2F] text-[10px] font-bold tracking-[0.3em] uppercase">Loading Content</span>
+                {/* Loading Text */}
+                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+                    <span className="text-[#0B1E2F] text-xs uppercase tracking-[0.3em] font-medium opacity-80">Loading</span>
                     <div className="flex gap-1.5">
                         {[0, 1, 2].map(i => (
                             <motion.div
                                 key={i}
-                                animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
-                                className="w-1.5 h-1.5 rounded-full bg-[#C9A45C]"
+                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                                className="w-1 h-1 rounded-full bg-[#C9A45C]"
                             />
                         ))}
                     </div>
@@ -190,3 +205,4 @@ const Loading = () => {
 };
 
 export default Loading;
+

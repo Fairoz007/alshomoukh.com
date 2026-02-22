@@ -85,12 +85,16 @@ const ContactSection = () => {
                   <MapPin size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-[#0B1E2F] mb-1">
-                      Campus Address
+                      Address
                     </p>
                     <p className="text-sm text-[#6B7280]">
-                      Muscat Academic Quarter, Sector 4
+                      Road 106, Way 208 Building 323.
                       <br />
-                      Riyadh, Kingdom of Saudi Arabia
+                      Hay Al Hail, Al Jadeed Al Hail South
+                      <br />
+                      P.O. Box 1756, PC: 111, Airport Heights
+                      <br />
+                      Muscat, Sultanate of Oman
                     </p>
                   </div>
                 </div>
@@ -99,9 +103,13 @@ const ContactSection = () => {
                   <Phone size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-[#0B1E2F] mb-1">
-                      Direct Admissions
+                      Contact
                     </p>
-                    <p className="text-sm text-[#6B7280]">T: +966 11 400 2000</p>
+                    <p className="text-sm text-[#6B7280]">
+                      Landline: +968 24284756 / +968 24284771
+                      <br />
+                      Mobile: +968 96523508
+                    </p>
                   </div>
                 </div>
 
@@ -112,7 +120,7 @@ const ContactSection = () => {
                       Email
                     </p>
                     <p className="text-sm text-[#6B7280]">
-                      admissions@alshomoukh.edu
+                      admission@alshomoukh.com
                     </p>
                   </div>
                 </div>
@@ -121,12 +129,12 @@ const ContactSection = () => {
                   <Clock size={20} className="text-[#C9A45C] mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-[#0B1E2F] mb-1">
-                      Registry Hours
+                      School Hours
                     </p>
                     <p className="text-sm text-[#6B7280]">
                       Sunday – Thursday
                       <br />
-                      08:00 – 16:00
+                      07:30 – 14:30
                     </p>
                   </div>
                 </div>

@@ -7,21 +7,27 @@ gsap.registerPlugin(ScrollTrigger);
 const curriculumStages = [
   {
     number: '01',
-    title: 'Early Years Foundation',
+    title: 'Kindergarten',
     description:
-      'Inquiry-led learning that builds confidence, communication, and early numeracy through play-based exploration.',
+      'Foundation Stage Curriculum. Early Learning focusing on inquiry-led play and development.',
   },
   {
     number: '02',
-    title: 'Primary Schooling',
+    title: 'Primary School',
     description:
-      'A balanced program developing critical thinking, creativity, and collaboration through interdisciplinary projects.',
+      'Key Stage 1 & 2 (Grades 1-6). A balanced program developing critical thinking and creativity.',
   },
   {
     number: '03',
-    title: 'Secondary Excellence',
+    title: 'Lower Secondary',
     description:
-      'Rigorous preparation for top universities with personalized guidance and advanced coursework.',
+      'Key Stage 3 (Grades 7-8). Building a strong academic foundation for future specialization.',
+  },
+  {
+    number: '04',
+    title: 'Upper Secondary',
+    description:
+      'Edexcel International (Grades 9-12). Rigorous preparation for university and global opportunities.',
   },
 ];
 

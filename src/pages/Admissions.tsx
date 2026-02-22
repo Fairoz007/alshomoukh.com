@@ -7,6 +7,7 @@ const Admissions = () => {
             <PageHeader
                 title="Admissions"
                 subtitle="Begin your journey with Al Shomoukh International School."
+                backgroundImage="/images/admissions_hero.png"
             />
 
             <div className="max-w-6xl mx-auto px-6 py-16">

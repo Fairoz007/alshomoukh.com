@@ -7,6 +7,7 @@ const Academy = () => {
             <PageHeader
                 title="The Academy"
                 subtitle="Cultivating intellect, character, and global perspective."
+                backgroundImage="/images/academic_excellence.jpg"
             />
 
             <div className="max-w-6xl mx-auto px-6 py-16">

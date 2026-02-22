@@ -15,15 +15,19 @@ const minDelay = <T,>(promise: Promise<T>, ms: number) => new Promise<T>(resolve
 // Lazy load all pages with delay to show the loader
 // In production, you might want to remove minDelay or reduce the time
 const Home = lazy(() => minDelay(import('./pages/Home'), 2000));
-const TermDates = lazy(() => minDelay(import('./pages/TermDates'), 1000));
-const Scholarships = lazy(() => minDelay(import('./pages/Scholarships'), 1000));
-const Alumni = lazy(() => minDelay(import('./pages/Alumni'), 1000));
-const Careers = lazy(() => minDelay(import('./pages/Careers'), 1000));
 const Academy = lazy(() => minDelay(import('./pages/Academy'), 1000));
 const Admissions = lazy(() => minDelay(import('./pages/Admissions'), 1000));
-const CampusTour = lazy(() => minDelay(import('./pages/CampusTour'), 1000));
-const Contact = lazy(() => minDelay(import('./pages/Contact'), 1000));
 const Connect = lazy(() => minDelay(import('./pages/Connect'), 1000));
+const About = lazy(() => minDelay(import('./pages/About'), 1000));
+const News = lazy(() => minDelay(import('./pages/News'), 1000));
+const Enrichment = lazy(() => minDelay(import('./pages/Enrichment'), 1000));
+
+// New Pages
+const Kindergarten = lazy(() => minDelay(import('./pages/Kindergarten'), 1000));
+const PrimarySchool = lazy(() => minDelay(import('./pages/PrimarySchool'), 1000));
+const LowerSecondary = lazy(() => minDelay(import('./pages/LowerSecondary'), 1000));
+const UpperSecondary = lazy(() => minDelay(import('./pages/UpperSecondary'), 1000));
+const LearningSupport = lazy(() => minDelay(import('./pages/LearningSupport'), 1000));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,15 +55,19 @@ const App = () => {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/term-dates" element={<TermDates />} />
-            <Route path="/scholarships" element={<Scholarships />} />
-            <Route path="/alumni" element={<Alumni />} />
-            <Route path="/careers" element={<Careers />} />
             <Route path="/academy" element={<Academy />} />
             <Route path="/admissions" element={<Admissions />} />
-            <Route path="/campus-tour" element={<CampusTour />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="/connect" element={<Connect />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/enrichment" element={<Enrichment />} />
+
+            {/* New Academic Routes */}
+            <Route path="/academy/kindergarten" element={<Kindergarten />} />
+            <Route path="/academy/primary" element={<PrimarySchool />} />
+            <Route path="/academy/lower-secondary" element={<LowerSecondary />} />
+            <Route path="/academy/upper-secondary" element={<UpperSecondary />} />
+            <Route path="/academy/learning-support" element={<LearningSupport />} />
           </Routes>
         </Suspense>
         <Footer />

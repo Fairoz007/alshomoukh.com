@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -18,13 +21,10 @@ const Navbar = () => {
 
   const handleNavigation = (href: string) => {
     setIsMobileMenuOpen(false);
-
-    // Check if it's a hash link
     if (href.startsWith('/#')) {
-      const hash = href.replace('/', ''); // e.g., #curriculum
+      const hash = href.replace('/', '');
       if (location.pathname !== '/') {
         navigate('/');
-        // Small delay to allow home to mount
         setTimeout(() => {
           const element = document.querySelector(hash);
           element?.scrollIntoView({ behavior: 'smooth' });
@@ -34,28 +34,36 @@ const Navbar = () => {
         element?.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Regular page link
       navigate(href);
       window.scrollTo(0, 0);
     }
   };
 
   const navLinks = [
-    { name: 'Academy', href: '/academy' },
+
+    { name: 'About Us', href: '/about' },
     { name: 'Admissions', href: '/admissions' },
-    { name: 'Curriculum', href: '/#curriculum' },
-    { name: 'Campus', href: '/campus-tour' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Connect', href: '/connect' },
+    {
+      name: 'Academic',
+      href: '/academy',
+      subLinks: [
+        { name: 'Curriculum', href: '/academy#curriculum' }, // Keeping as anchor on Academic page or separate? User didn't specify page for Curriculum but it's usually inside Academic. Leaving as anchor or creating page. Wait, user provided "Curriculum" in list of sub items. If it's a subpage, I should make it. But user task "Curriculum" was sub item. The main request was "Academic -> sub -> Curriculum". I'll keep it as anchor relative to Academy page or redirect to Academy page section if no dedicated page. Let's point to /academy#curriculum for now as Academy page likely has it.
+        { name: 'Kindergarten', href: '/academy/kindergarten' },
+        { name: 'Primary School', href: '/academy/primary' },
+        { name: 'Lower Secondary', href: '/academy/lower-secondary' },
+        { name: 'Upper Secondary', href: '/academy/upper-secondary' },
+        { name: 'Learning Support', href: '/academy/learning-support' },
+      ]
+    },
+    { name: 'Involvement', href: '/connect' },
+    { name: 'News & Stories', href: '/news' },
+    { name: 'Enrichment', href: '/enrichment' },
   ];
 
-  const mobileLinks = [
-    ...navLinks,
-    { name: 'Scholarships', href: '/scholarships' },
-    { name: 'Alumni', href: '/alumni' },
-    { name: 'Term Dates', href: '/term-dates' },
-    { name: 'Contact', href: '/contact' },
-  ];
+  const handleMobileExpand = (name: string) => {
+    setMobileExpanded(mobileExpanded === name ? null : name);
+  };
+
 
   return (
     <>
@@ -66,116 +74,115 @@ const Navbar = () => {
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link
-              to="/"
-              onClick={() => {
-                window.scrollTo(0, 0);
-                setIsMobileMenuOpen(false);
-              }}
-              className="text-xl font-semibold tracking-[0.15em] text-[#0B1E2F]"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
-            >
-              AL SHOMOUKH
-            </Link>
+          <div className="flex items-center justify-between h-20">
+            {/* School Name (Left) */}
+            <div className="flex items-center">
+              <Link
+                to="/"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-xl font-semibold tracking-[0.15em] text-[#0B1E2F]"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                Al Shomoukh
+              </Link>
+            </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
+            {/* Desktop Navigation (Centered) */}
+            <div className="hidden xl:flex items-center justify-center flex-1 px-8 gap-8">
               {navLinks.map((link) => (
-                link.href.startsWith('/#') ? (
+                <div
+                  key={link.name}
+                  className="relative group"
+                >
                   <button
-                    key={link.name}
-                    onClick={() => handleNavigation(link.href)}
-                    className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide"
+                    onClick={() => !link.subLinks && handleNavigation(link.href)}
+                    className="flex items-center gap-1 text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide uppercase py-4"
                   >
                     {link.name}
+                    {link.subLinks && <ChevronDown size={14} />}
                   </button>
-                ) : (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300 tracking-wide"
-                  >
-                    {link.name}
-                  </Link>
-                )
+
+                  {/* Dropdown Menu */}
+                  {link.subLinks && (
+                    <div className="absolute top-full left-0 w-56 bg-white shadow-lg rounded-sm py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border-t-2 border-[#C9A45C]">
+                      {link.subLinks.map((sub) => (
+                        <button
+                          key={sub.name}
+                          onClick={() => handleNavigation(sub.href)}
+                          className="block w-full text-left px-4 py-3 text-sm text-[#0B1E2F] hover:bg-[#F4F1EA] hover:text-[#C9A45C] transition-colors border-b border-gray-50 last:border-0"
+                        >
+                          {sub.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
 
-            {/* Desktop CTA Buttons */}
-            <div className="hidden md:flex items-center gap-4">
-              <Link
-                to="/contact"
-                className="text-sm font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
+            {/* Mobile Menu Button (Right) */}
+            <div className="xl:hidden flex items-center">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-[#0B1E2F]"
+                aria-label="Toggle mobile menu"
               >
-                Enquire
-              </Link>
-              <Link
-                to="/admissions"
-                className="px-5 py-2.5 border border-[#C9A45C] text-[#0B1E2F] text-sm font-medium tracking-wide transition-all duration-300 hover:bg-[#C9A45C] hover:text-white"
-              >
-                Apply Now
-              </Link>
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-[#0B1E2F]"
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Empty div for balancing layout if needed, or keeping CTA invisible on desktop */}
+            <div className="hidden xl:block w-8"></div>
           </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-[#F4F1EA] transition-transform duration-500 md:hidden overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-0 z-40 bg-[#F4F1EA] transition-transform duration-500 xl:hidden overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        <div className="flex flex-col items-center justify-start pt-32 pb-10 min-h-full gap-6 px-6">
-          {mobileLinks.map((link) => (
-            link.href.startsWith('/#') ? (
-              <button
-                key={link.name}
-                onClick={() => handleNavigation(link.href)}
-                className="text-2xl font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
-              >
-                {link.name}
-              </button>
-            ) : (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-2xl font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
-              >
-                {link.name}
-              </Link>
-            )
+        <div className="flex flex-col items-start pt-24 pb-10 min-h-full px-6 gap-2">
+
+
+
+          {navLinks.map((link) => (
+            <div key={link.name} className="w-full border-b border-gray-200/50 last:border-0">
+              {link.subLinks ? (
+                <div className="w-full">
+                  <button
+                    onClick={() => handleMobileExpand(link.name)}
+                    className="flex items-center justify-between w-full py-4 text-left"
+                  >
+                    <span className="text-lg font-medium text-[#111827] uppercase tracking-wide">{link.name}</span>
+                    {mobileExpanded === link.name ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                  </button>
+
+                  <div className={`overflow-hidden transition-all duration-300 bg-white/50 ${mobileExpanded === link.name ? 'max-h-96 pb-4' : 'max-h-0'}`}>
+                    {link.subLinks.map(sub => (
+                      <button
+                        key={sub.name}
+                        onClick={() => handleNavigation(sub.href)}
+                        className="block w-full text-left py-3 px-4 text-[#6B7280] hover:text-[#C9A45C]"
+                      >
+                        {sub.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleNavigation(link.href)}
+                  className="block w-full text-left py-4 text-lg font-medium text-[#111827] hover:text-[#C9A45C] transition-colors uppercase tracking-wide"
+                >
+                  {link.name}
+                </button>
+              )}
+            </div>
           ))}
-          <div className="w-16 h-px bg-[#C9A45C] my-4" />
-          <div className="flex flex-col items-center gap-4 w-full">
-            <Link
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-medium text-[#111827] hover:text-[#C9A45C] transition-colors duration-300"
-            >
-              Enquire
-            </Link>
-            <Link
-              to="/admissions"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-8 py-3 border border-[#C9A45C] text-[#0B1E2F] text-lg font-medium tracking-wide transition-all duration-300 hover:bg-[#C9A45C] hover:text-white w-full max-w-xs text-center"
-            >
-              Apply Now
-            </Link>
-          </div>
         </div>
       </div>
     </>
