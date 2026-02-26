@@ -1,122 +1,138 @@
-import { Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const Footer = () => {
   const quickLinks = [
-    { name: 'Term Dates', href: '#' },
-    { name: 'Scholarships', href: '#' },
-    { name: 'Alumni Network', href: '#' },
-    { name: 'Careers', href: '#' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Academics', path: '/academics' },
+    { name: 'Admissions', path: '/admissions' },
+    { name: 'Student Life', path: '/student-life' },
+    { name: 'News & Events', path: '/news-events' },
+    { name: 'Contact', path: '/contact' },
   ];
 
-  const academyLinks = [
-    { name: 'Admissions', href: '#admissions' },
-    { name: 'Campus Tour', href: '#facilities' },
-    { name: 'Scholarships', href: '#' },
-    { name: 'Contact', href: '#contact' },
+  const admissionsLinks = [
+    { name: 'Admission Process', path: '/admissions' },
+    { name: 'Requirements', path: '/admissions' },
+    { name: 'Tuition Fees', path: '/admissions' },
+    { name: 'Apply Online', path: '/apply-now' },
+    { name: 'FAQs', path: '/admissions' },
   ];
 
   return (
-    <footer className="bg-[#0B1E2F] text-white py-12 sm:py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <h3
-              className="text-2xl font-semibold tracking-[0.15em] mb-6"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
-            >
-              AL SHOMOUKH
-            </h3>
-            <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-xs">
-              Dedicated to academic excellence and personal growth, preparing
-              global citizens to lead with integrity and innovation.
+    <footer className="bg-navy text-white">
+      {/* Main Footer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* About School */}
+          <div>
+            <div className="mb-6">
+              <img 
+                src="/images/White SIS Logo-01.png" 
+                alt="SIS Logo" 
+                className="h-16 w-auto"
+              />
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed mb-6">
+              Al Shomoukh International School is a premier educational institution 
+              dedicated to nurturing global leaders through academic excellence, 
+              innovation, and character development.
             </p>
+            <div className="flex gap-3">
+              <a href="#" className="w-9 h-9 rounded-full bg-navy-700 flex items-center justify-center hover:bg-gold transition-colors">
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-full bg-navy-700 flex items-center justify-center hover:bg-gold transition-colors">
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-full bg-navy-700 flex items-center justify-center hover:bg-gold transition-colors">
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-9 h-9 rounded-full bg-navy-700 flex items-center justify-center hover:bg-gold transition-colors">
+                <Youtube className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="eyebrow-gold mb-6">Quick Links</h4>
+            <h3 className="font-serif text-lg font-semibold mb-6 text-gold">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-[#9CA3AF] hover:text-[#C9A45C] transition-colors duration-300"
+                  <Link 
+                    to={link.path}
+                    className="text-navy-200 text-sm hover:text-gold transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Academy Links */}
+          {/* Admissions */}
           <div>
-            <h4 className="eyebrow-gold mb-6">Academy</h4>
+            <h3 className="font-serif text-lg font-semibold mb-6 text-gold">Admissions</h3>
             <ul className="space-y-3">
-              {academyLinks.map((link) => (
+              {admissionsLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-[#9CA3AF] hover:text-[#C9A45C] transition-colors duration-300"
+                  <Link 
+                    to={link.path}
+                    className="text-navy-200 text-sm hover:text-gold transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Connect */}
+          {/* Contact Info */}
           <div>
-            <h4 className="eyebrow-gold mb-6">Connect</h4>
-            <div className="flex gap-4 mb-6">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-[rgba(244,241,234,0.2)] flex items-center justify-center text-[#9CA3AF] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-all duration-300"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-[rgba(244,241,234,0.2)] flex items-center justify-center text-[#9CA3AF] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-all duration-300"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-[rgba(244,241,234,0.2)] flex items-center justify-center text-[#9CA3AF] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-all duration-300"
-              >
-                <Twitter size={18} />
-              </a>
-            </div>
-            <div className="text-sm text-[#9CA3AF]">
-              <p className="mb-1">Al Shomoukh Campus</p>
-              <p className="mb-1">Elite District, Muscat</p>
-              <p>Sultanate of Oman</p>
-            </div>
+            <h3 className="font-serif text-lg font-semibold mb-6 text-gold">Contact Us</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-navy-200 text-sm">
+                  Al Shomoukh International School<br />
+                  PO Box 1234, Muscat<br />
+                  Sultanate of Oman
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-gold flex-shrink-0" />
+                <a href="tel:+96812345678" className="text-navy-200 text-sm hover:text-gold transition-colors">
+                  +968 1234 5678
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-gold flex-shrink-0" />
+                <a href="mailto:info@alshomoukh.edu.om" className="text-navy-200 text-sm hover:text-gold transition-colors">
+                  info@alshomoukh.edu.om
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-navy-200 text-sm">
+                  Sun - Thu: 7:30 AM - 3:00 PM<br />
+                  Fri - Sat: Closed
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-[rgba(244,241,234,0.1)]">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-[#6B7280]">
-              © 2024 Al Shomoukh International School. All rights reserved.
-            </p>
+      {/* Bottom Bar */}
+      <div className="border-t border-navy-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-navy-300">
+            <p>&copy; {new Date().getFullYear()} Al Shomoukh International School. All rights reserved.</p>
             <div className="flex gap-6">
-              <a
-                href="#"
-                className="text-xs text-[#6B7280] hover:text-[#C9A45C] transition-colors duration-300"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-xs text-[#6B7280] hover:text-[#C9A45C] transition-colors duration-300"
-              >
-                Terms of Service
-              </a>
+              <Link to="/" className="hover:text-gold transition-colors">Privacy Policy</Link>
+              <Link to="/" className="hover:text-gold transition-colors">Terms of Service</Link>
+              <Link to="/" className="hover:text-gold transition-colors">Sitemap</Link>
             </div>
           </div>
         </div>
