@@ -14,8 +14,9 @@ const Header = ({ isScrolled }: HeaderProps) => {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
+    { name: 'Admissions', path: '/admissions' },
     {
-      name: 'Academics',
+      name: 'Academic',
       path: '/academics',
       submenu: [
         { name: 'Kindergarten', path: '/academics/kindergarten' },
@@ -24,9 +25,10 @@ const Header = ({ isScrolled }: HeaderProps) => {
         { name: 'Upper Secondary', path: '/academics/upper-secondary' },
       ]
     },
-    { name: 'Admissions', path: '/admissions' },
-    { name: 'Student Life', path: '/student-life' },
-    { name: 'News', path: '/news-events' },
+    { name: 'Involvement', path: 'https://www.alshomoukh.com:443/involvement' },
+    { name: 'News & Stories', path: '/news-events' },
+    { name: 'Enrichment', path: 'https://www.alshomoukh.com:443/enrichment' },
+    { name: 'Contact Us', path: '/contact' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -40,11 +42,11 @@ const Header = ({ isScrolled }: HeaderProps) => {
           <svg className="w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M0 0H1440V60C1440 60 1100 95 720 75C340 55 0 120 0 120V0Z"
-              fill="#0F2B46"
+              fill="#0B3958"
             />
             <path
               d="M0 120C0 120 340 55 720 75C1100 95 1440 60 1440 60"
-              stroke="#C6A14A"
+              stroke="#BB9268"
               strokeWidth="2"
             />
           </svg>
@@ -66,28 +68,28 @@ const Header = ({ isScrolled }: HeaderProps) => {
               <div className="flex flex-col justify-start pt-2">
                 <div className="flex flex-col">
                   <span className="text-base sm:text-[1.1rem] text-white uppercase tracking-[0.15em] font-extrabold leading-tight">Al Shomoukh</span>
-                  <span className="text-[10px] sm:text-[11px] text-[#C6A14A] uppercase tracking-[0.12em] font-bold">International School</span>
+                  <span className="text-[10px] sm:text-[11px] text-[#BB9268] uppercase tracking-[0.12em] font-bold">International School</span>
                 </div>
               </div>
             </Link>
 
             {/* Top Links Right */}
             <div className="flex items-center gap-6 text-[11px] sm:text-xs text-white/90 font-sans tracking-wide">
-              <a href="tel:+96812345678" className="flex items-center gap-2 hover:text-[#C6A14A] transition-colors">
-                <Phone className="w-3.5 h-3.5 text-[#C6A14A]" />
+              <a href="tel:+96812345678" className="flex items-center gap-2 hover:text-[#BB9268] transition-colors">
+                <Phone className="w-3.5 h-3.5 text-[#BB9268]" />
                 <span className="font-medium">+968 1234 5678</span>
               </a>
-              <a href="mailto:info@alshomoukh.edu.om" className="flex items-center gap-2 hover:text-[#C6A14A] transition-colors">
-                <Mail className="w-3.5 h-3.5 text-[#C6A14A]" />
+              <a href="mailto:info@alshomoukh.edu.om" className="flex items-center gap-2 hover:text-[#BB9268] transition-colors">
+                <Mail className="w-3.5 h-3.5 text-[#BB9268]" />
                 <span className="font-medium">info@alshomoukh.edu.om</span>
               </a>
               <div className="w-[1px] h-3 bg-white/20 mx-1"></div>
-              <Link to="/portal" className="flex items-center gap-2 hover:text-[#C6A14A] transition-colors font-medium">
-                <User className="w-3.5 h-3.5 text-[#C6A14A]" />
+              <Link to="/portal" className="flex items-center gap-2 hover:text-[#BB9268] transition-colors font-medium">
+                <User className="w-3.5 h-3.5 text-[#BB9268]" />
                 <span className="opacity-80">Select Info</span>
               </Link>
               <div className="w-[1px] h-3 bg-white/20 mx-1"></div>
-              <div className="flex items-center gap-1 cursor-pointer hover:text-[#C6A14A] transition-colors font-bold">
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#BB9268] transition-colors font-bold">
                 <span>EN</span>
               </div>
             </div>
@@ -105,7 +107,7 @@ const Header = ({ isScrolled }: HeaderProps) => {
             <div className="w-[300px] hidden lg:block"></div>
 
             {/* Navigation Centered/Right aligned */}
-            <div className="hidden lg:flex items-center justify-end flex-1 gap-1 xl:gap-8">
+            <div className="hidden lg:flex items-center justify-end flex-1 gap-1 xl:gap-6">
               {navItems.map((item) => (
                 <div
                   key={item.name}
@@ -119,23 +121,23 @@ const Header = ({ isScrolled }: HeaderProps) => {
                     >
                       <button
                         className={`flex items-center gap-1.5 py-4 px-1 text-[13px] xl:text-[14px] font-sans font-semibold tracking-wide transition-colors ${isActive(item.path) || item.submenu.some(sub => isActive(sub.path))
-                          ? 'text-[#C6A14A]'
-                          : isScrolled ? 'text-[#0F2B46] hover:text-[#C6A14A]' : 'text-[#0F2B46] hover:text-[#C6A14A]'
+                          ? 'text-[#BB9268]'
+                          : isScrolled ? 'text-[#0B3958] hover:text-[#BB9268]' : 'text-[#0B3958] hover:text-[#BB9268]'
                           }`}
                       >
                         {item.name}
                         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isAcademicsOpen ? 'rotate-180' : ''}`} />
                       </button>
 
-                      <div className={`absolute top-[100%] left-0 bg-white shadow-xl py-3 min-w-[220px] transition-all duration-300 transform origin-top border-t-2 border-[#C6A14A] ${isAcademicsOpen ? 'opacity-100 scale-y-100 translate-y-0 pointer-events-auto z-50' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
+                      <div className={`absolute top-[100%] left-0 bg-white shadow-xl py-3 min-w-[220px] transition-all duration-300 transform origin-top border-t-2 border-[#BB9268] ${isAcademicsOpen ? 'opacity-100 scale-y-100 translate-y-0 pointer-events-auto z-50' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none'
                         }`}>
                         {item.submenu.map((sub) => (
                           <Link
                             key={sub.name}
                             to={sub.path}
                             className={`block px-6 py-2.5 text-[14px] font-sans transition-colors ${isActive(sub.path)
-                              ? 'text-[#0F2B46] bg-[#F4F8FA] font-bold border-l-2 border-[#C6A14A]'
-                              : 'text-gray-600 hover:text-[#0F2B46] hover:bg-gray-50'
+                              ? 'text-[#0B3958] bg-[#F4F8FA] font-bold border-l-2 border-[#BB9268]'
+                              : 'text-gray-600 hover:text-[#0B3958] hover:bg-gray-50'
                               }`}
                           >
                             {sub.name}
@@ -143,12 +145,21 @@ const Header = ({ isScrolled }: HeaderProps) => {
                         ))}
                       </div>
                     </div>
+                  ) : item.path.startsWith('http') ? (
+                    <a
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block py-4 px-1 text-[13px] xl:text-[14px] font-sans font-semibold tracking-wide transition-colors ${isScrolled ? 'text-[#0B3958] hover:text-[#BB9268]' : 'text-[#0B3958] hover:text-[#BB9268]'}`}
+                    >
+                      {item.name}
+                    </a>
                   ) : (
                     <Link
                       to={item.path}
                       className={`block py-4 px-1 text-[13px] xl:text-[14px] font-sans font-semibold tracking-wide transition-colors ${isActive(item.path)
-                        ? 'text-[#C6A14A]'
-                        : isScrolled ? 'text-[#0F2B46] hover:text-[#C6A14A]' : 'text-[#0F2B46] hover:text-[#C6A14A]'
+                        ? 'text-[#BB9268]'
+                        : isScrolled ? 'text-[#0B3958] hover:text-[#BB9268]' : 'text-[#0B3958] hover:text-[#BB9268]'
                         }`}
                     >
                       {item.name}
@@ -158,10 +169,10 @@ const Header = ({ isScrolled }: HeaderProps) => {
               ))}
 
               {/* Apply Now Right */}
-              <div className="ml-4">
+              <div className="ml-2 xl:ml-4">
                 <Link
                   to="/apply-now"
-                  className="bg-[#C6A14A] hover:bg-[#b08b5e] text-white px-8 py-3 rounded-full text-[13px] font-sans font-bold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-[2px]"
+                  className="bg-[#BB9268] hover:bg-[#875D3B] text-white px-6 xl:px-8 py-3 rounded-full text-[13px] font-sans font-bold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-[2px]"
                 >
                   Apply Now
                 </Link>
@@ -172,11 +183,12 @@ const Header = ({ isScrolled }: HeaderProps) => {
             <div className="lg:hidden flex justify-between w-full items-center">
               <Link to="/" className="flex items-center gap-2">
                 <img src="/images/SIS Logo-01.png" alt="Logo" className="h-10 w-auto" />
-                <span className="font-serif font-bold text-[#0F2B46]">S.I.S</span>
+                <span className="font-serif font-bold text-[#0B3958]">S.I.S</span>
               </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-[#0F2B46] hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-[#0B3958] hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Toggle Menu"
               >
                 {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
               </button>
@@ -192,25 +204,34 @@ const Header = ({ isScrolled }: HeaderProps) => {
                 <div key={item.name}>
                   {item.submenu ? (
                     <div className="space-y-2">
-                      <div className="text-[#0F2B46] font-bold text-lg border-b border-gray-100 pb-2">{item.name}</div>
+                      <div className="text-[#0B3958] font-bold text-lg border-b border-gray-100 pb-2">{item.name}</div>
                       <div className="pl-4 space-y-2 py-2">
                         {item.submenu.map((sub) => (
                           <Link
                             key={sub.name}
                             to={sub.path}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="block py-2 text-gray-600 font-medium"
+                            className={`block py-2 text-[15px] font-medium ${isActive(sub.path) ? 'text-[#BB9268]' : 'text-gray-600'}`}
                           >
                             {sub.name}
                           </Link>
                         ))}
                       </div>
                     </div>
+                  ) : item.path.startsWith('http') ? (
+                    <a
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block py-3 text-[#0B3958] font-bold text-lg border-b border-gray-100"
+                    >
+                      {item.name}
+                    </a>
                   ) : (
                     <Link
                       to={item.path}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-3 text-[#0F2B46] font-bold text-lg border-b border-gray-100"
+                      className={`block py-3 font-bold text-lg border-b border-gray-100 ${isActive(item.path) ? 'text-[#BB9268]' : 'text-[#0B3958]'}`}
                     >
                       {item.name}
                     </Link>
@@ -221,7 +242,7 @@ const Header = ({ isScrolled }: HeaderProps) => {
                 <Link
                   to="/apply-now"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="bg-[#C6A14A] text-white block text-center py-4 rounded-full font-bold shadow-lg"
+                  className="bg-[#BB9268] text-white block text-center py-4 rounded-full font-bold shadow-lg"
                 >
                   Apply Now
                 </Link>
